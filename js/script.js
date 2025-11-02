@@ -63,8 +63,28 @@ function initialScrollNudge() {
 }
 
 // Run on DOMContentLoaded and load as a fallback
-document.addEventListener('DOMContentLoaded', initialScrollNudge);
-window.addEventListener('load', initialScrollNudge);
+// Run the nudge repeatedly for a short period until the viewport height stabilizes
+function runInitialNudgeRetries({maxAttempts = 8, interval = 200} = {}) {
+    let attempts = 0;
+    let lastInnerHeight = window.innerHeight;
+
+    const id = setInterval(() => {
+        attempts++;
+        initialScrollNudge();
+
+        const currentInnerHeight = window.innerHeight;
+        // If innerHeight stabilized (didn't change) for two consecutive attempts, stop retrying
+        if (currentInnerHeight === lastInnerHeight || attempts >= maxAttempts) {
+            clearInterval(id);
+            return;
+        }
+
+        lastInnerHeight = currentInnerHeight;
+    }, interval);
+}
+
+document.addEventListener('DOMContentLoaded', () => runInitialNudgeRetries());
+window.addEventListener('load', () => runInitialNudgeRetries());
 
 // ========== SMOOTH SCROLL BEHAVIOR ==========
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
