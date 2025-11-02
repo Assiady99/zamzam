@@ -7,8 +7,9 @@
 // Use a CSS variable --vh (1% of viewport height in px) to avoid mobile browser
 // behaviour where 100vh changes as address bars hide/show. We set --vh on
 // load/resize/orientationchange and trigger a resize/scroll to apply initial transforms.
+// Use visualViewport API if available for better mobile support.
 function setVh() {
-    const vh = window.innerHeight * 0.01;
+    const vh = (window.visualViewport ? window.visualViewport.height : window.innerHeight) * 0.01;
     document.documentElement.style.setProperty('--vh', `${vh}px`);
 }
 
@@ -16,7 +17,15 @@ function setVh() {
 setVh();
 window.addEventListener('resize', setVh);
 window.addEventListener('orientationchange', setVh);
-window.addEventListener('scroll', debounce(setVh, 100)); // Update --vh on scroll to fix mobile viewport height issues
+
+// Use visualViewport API for dynamic viewport height changes on mobile
+if (window.visualViewport) {
+    window.visualViewport.addEventListener('resize', setVh);
+} else {
+    // Fallback for browsers without visualViewport support
+    window.addEventListener('scroll', debounce(setVh, 100));
+}
+
 window.addEventListener('load', () => {
     setVh();
     // trigger handlers that depend on scroll/resize so the initial layout is correct
