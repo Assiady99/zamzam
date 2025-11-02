@@ -281,9 +281,7 @@ body {
 
 /* ========== HERO SECTION ========== */
 .hero {
-    /* Prefer dynamic viewport unit (dvh) when available, fallback to --vh set by JS, then to 1vh */
-    /* 100dvh handles mobile browser chrome better on modern engines */
-    min-height: 100dvh;
+    /* Use --vh (set in JS) to avoid mobile browser 100vh issues */
     min-height: calc(var(--vh, 1vh) * 100);
     display: flex;
     align-items: center;
@@ -1339,9 +1337,8 @@ section {
         right: -100%;
         width: 100%;
         max-width: 300px;
-    /* Prefer dynamic viewport unit d(h) first, then use --vh fallback to avoid mobile chrome issues */
-    height: calc(100dvh - 70px);
-    height: calc(var(--vh, 1vh) * 100 - 70px);
+        /* Use --vh to calculate height reliably on mobile browsers */
+        height: calc(var(--vh, 1vh) * 100 - 70px);
         background: rgba(255, 255, 255, 0.98);
         backdrop-filter: blur(10px);
         flex-direction: column;

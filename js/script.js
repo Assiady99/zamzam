@@ -16,75 +16,13 @@ function setVh() {
 setVh();
 window.addEventListener('resize', setVh);
 window.addEventListener('orientationchange', setVh);
+window.addEventListener('scroll', debounce(setVh, 100)); // Update --vh on scroll to fix mobile viewport height issues
 window.addEventListener('load', () => {
     setVh();
     // trigger handlers that depend on scroll/resize so the initial layout is correct
     window.dispatchEvent(new Event('resize'));
     window.dispatchEvent(new Event('scroll'));
 });
-
-// Apply parallax/reveal/counters once on load to ensure initial layout matches post-scroll state
-function updateParallaxOnce() {
-    const scrolled = window.pageYOffset || 0;
-    const heroOverlay = document.querySelector('.hero-overlay');
-    const floatingCards = document.querySelectorAll('.floating-card');
-
-    if (heroOverlay) {
-        heroOverlay.style.transform = `translateY(${scrolled * 0.3}px)`;
-    }
-
-    floatingCards.forEach((card, index) => {
-        const speed = 0.1 + (index * 0.05);
-        card.style.transform = `translateY(${scrolled * speed}px)`;
-    });
-}
-
-// Small scroll nudge and re-run of scroll-dependent functions to coax mobile browsers into proper layout
-function initialScrollNudge() {
-    // Try a tiny programmatic scroll to trigger reflow on mobile browsers
-    try {
-        window.scrollTo(0, 1);
-        window.scrollTo(0, 0);
-    } catch (e) {
-        // ignore if prevented
-    }
-
-    // Call functions that normally run on scroll so layout/animations are set
-    updateParallaxOnce();
-    if (typeof revealOnScroll === 'function') revealOnScroll();
-    if (typeof animateCounters === 'function') animateCounters();
-    if (typeof setActiveLink === 'function') setActiveLink();
-
-    // Retry shortly after in case the browser completes chrome hiding after a short delay
-    setTimeout(() => {
-        updateParallaxOnce();
-        if (typeof revealOnScroll === 'function') revealOnScroll();
-    }, 250);
-}
-
-// Run on DOMContentLoaded and load as a fallback
-// Run the nudge repeatedly for a short period until the viewport height stabilizes
-function runInitialNudgeRetries({maxAttempts = 8, interval = 200} = {}) {
-    let attempts = 0;
-    let lastInnerHeight = window.innerHeight;
-
-    const id = setInterval(() => {
-        attempts++;
-        initialScrollNudge();
-
-        const currentInnerHeight = window.innerHeight;
-        // If innerHeight stabilized (didn't change) for two consecutive attempts, stop retrying
-        if (currentInnerHeight === lastInnerHeight || attempts >= maxAttempts) {
-            clearInterval(id);
-            return;
-        }
-
-        lastInnerHeight = currentInnerHeight;
-    }, interval);
-}
-
-document.addEventListener('DOMContentLoaded', () => runInitialNudgeRetries());
-window.addEventListener('load', () => runInitialNudgeRetries());
 
 // ========== SMOOTH SCROLL BEHAVIOR ==========
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -652,7 +590,7 @@ console.log('%c© 2025 Zamzam Company - All Rights Reserved', 'color: #6c757d; f
 
 // ========== INITIALIZE ==========
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('✅ Website initialized successfully!');
+    console.log('Website initialized successfully!');
     
     // Set initial active nav link
     setActiveLink();
