@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نخبة الغذاء - شركة صناعة المواد الغذائية</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2E7D32;
+            --primary-light: #4CAF50;
+            --primary-dark: #1B5E20;
+            --accent: #FF9800;
+            --accent-light: #FFB74D;
+        }
+        
+        body {
+            font-family: 'Cairo', sans-serif;
+            scroll-behavior: smooth;
+        }
+        
+        .hero-slide {
+            background-size: cover;
+            background-position: center;
+            transition: all 1.5s ease-in-out;
+        }
+        
+        .product-card {
+            transform-style: preserve-3d;
+            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            perspective: 1000px;
+        }
+        
+        .product-card:hover {
+            transform: rotateY(180deg);
+        }
+        
+        .product-front, .product-back {
+            backface-visibility: hidden;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 1rem;
+            overflow: hidden;
+        }
+        
+        .product-back {
+            transform: rotateY(180deg);
+        }
+        
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+        
+        @keyframes floating {
+            0% { transform: translate(0, 0px); }
+            50% { transform: translate(0, -15px); }
+            100% { transform: translate(0, 0px); }
+        }
+        
+        .pulse-glow {
+            animation: pulse-glow 2s infinite;
+        }
+        
+        @keyframes pulse-glow {
+            0% { box-shadow: 0 0 0 0 rgba(46, 125, 50, 0.4); }
+            70% { box-shadow: 0 0 0 15px rgba(46, 125, 50, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(46, 125, 50, 0); }
+        }
+        
+        .gradient-bg-1 {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .gradient-bg-2 {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+        
+        .gradient-bg-3 {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+        
+        .gradient-bg-4 {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+        }
+        
+        .gradient-bg-5 {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+        }
+        
+        .gradient-bg-6 {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+        }
+        
+        .parallax {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        
+        .stagger-animation > * {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: stagger 0.5s ease forwards;
+        }
+        
+        @keyframes stagger {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .stagger-animation > *:nth-child(1) { animation-delay: 0.1s; }
+        .stagger-animation > *:nth-child(2) { animation-delay: 0.2s; }
+        .stagger-animation > *:nth-child(3) { animation-delay: 0.3s; }
+        .stagger-animation > *:nth-child(4) { animation-delay: 0.4s; }
+        .stagger-animation > *:nth-child(5) { animation-delay: 0.5s; }
+        .stagger-animation > *:nth-child(6) { animation-delay: 0.6s; }
+        
+        .morph-shape {
+            border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+            animation: morph 8s ease-in-out infinite;
+        }
+        
+        @keyframes morph {
+            0% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+            50% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
+            100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+        }
+        
+        .text-shadow {
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+        
+        .hero-overlay {
+            background: linear-gradient(45deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.4) 100%);
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-purple-50 to-indigo-100">
+    <!-- شريط التنقل -->
+    <nav class="fixed w-full z-50 transition-all duration-500 bg-white/90 backdrop-blur-md shadow-lg">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center py-4">
+                <!-- الشعار -->
+                <div class="flex items-center">
+                    <div class="w-12 h-12 bg-gradient-to-r from-green-600 to-green-800 rounded-full flex items-center justify-center text-white font-bold text-xl shadow-lg pulse-glow">Z</div>
+                    <span class="mr-3 text-xl font-bold bg-gradient-to-r from-green-700 to-green-900 bg-clip-text text-transparent"> زمزم</span>
+                </div>
+                
+                <!-- روابط التنقل -->
+                <div class="hidden md:flex space-x-8 space-x-reverse">
+                    <a href="#home" class="text-green-700 hover:text-green-500 font-semibold transition duration-300 relative group">
+                        الرئيسية
+                        <span class="absolute bottom-0 right-0 w-0 h-0.5 bg-green-500 transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                    <a href="#about" class="text-gray-600 hover:text-green-500 font-semibold transition duration-300 relative group">
+                        من نحن
+                        <span class="absolute bottom-0 right-0 w-0 h-0.5 bg-green-500 transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                    <a href="#products" class="text-gray-600 hover:text-green-500 font-semibold transition duration-300 relative group">
+                        المنتجات
+                        <span class="absolute bottom-0 right-0 w-0 h-0.5 bg-green-500 transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                    <a href="#innovation" class="text-gray-600 hover:text-green-500 font-semibold transition duration-300 relative group">
+                        الابتكار
+                        <span class="absolute bottom-0 right-0 w-0 h-0.5 bg-green-500 transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                    <a href="#contact" class="text-gray-600 hover:text-green-500 font-semibold transition duration-300 relative group">
+                        اتصل بنا
+                        <span class="absolute bottom-0 right-0 w-0 h-0.5 bg-green-500 transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                </div>
+                
+                <!-- زر القائمة للهواتف -->
+                <div class="md:hidden">
+                    <button id="menu-toggle" class="text-gray-600 focus:outline-none">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- القائمة المنسدلة للهواتف -->
+            <div id="mobile-menu" class="hidden md:hidden pb-4 border-t border-gray-200 pt-4">
+                <a href="#home" class="block py-2 text-green-700 font-semibold">الرئيسية</a>
+                <a href="#about" class="block py-2 text-gray-600 hover:text-green-500 transition duration-300">من نحن</a>
+                <a href="#products" class="block py-2 text-gray-600 hover:text-green-500 transition duration-300">المنتجات</a>
+                <a href="#innovation" class="block py-2 text-gray-600 hover:text-green-500 transition duration-300">الابتكار</a>
+                <a href="#contact" class="block py-2 text-gray-600 hover:text-green-500 transition duration-300">اتصل بنا</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- قسم الهيرو مع السلايدر التلقائي -->
+    <section id="home" class="pt-20 overflow-hidden">
+        <div class="hero-slider relative h-screen">
+            <!-- الشريحة الأولى -->
+            <div class="hero-slide absolute inset-0 flex items-center justify-center hero-overlay" style="background: url('https://images.unsplash.com/photo-1490818387583-1baba5e638af?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1932&q=80') center/cover;">
+                <div class="container mx-auto px-4 text-center text-white">
+                    <h1 class="text-5xl md:text-7xl font-bold mb-6 text-shadow stagger-animation">نخبة <span class="text-yellow-300">زمزم</span></h1>
+                    <p class="text-xl md:text-2xl mb-8 max-w-2xl mx-auto text-shadow stagger-animation">جودة لا تضاهى وطعم لا يُنسى في كل لقمة</p>
+                    <div class="stagger-animation">
+                        <a href="#products" class="bg-yellow-500 hover:bg-yellow-600 text-green-900 font-bold px-8 py-4 rounded-full text-lg shadow-lg transition duration-300 transform hover:scale-105 inline-block">
+                            اكتشف منتجاتنا <i class="fas fa-arrow-left mr-2"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2">
+                    <div class="w-6 h-10 border-2 border-white rounded-full flex justify-center">
+                        <div class="w-1 h-3 bg-white rounded-full mt-2 animate-bounce"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- الشريحة الثانية -->
+            <div class="hero-slide absolute inset-0 flex items-center hero-overlay" style="background: url('https://images.unsplash.com/photo-1556909114-4d0d853e5e15?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1932&q=80') center/cover;">
+                <div class="container mx-auto px-4">
+                    <div class="max-w-2xl">
+                        <h2 class="text-4xl md:text-6xl font-bold text-white mb-6 text-shadow stagger-animation">منتجات <span class="text-green-400">طبيعية</span> 100%</h2>
+                        <p class="text-xl text-white mb-8 text-shadow stagger-animation">نقدم تشكيلة واسعة من المنتجات الغذائية المصنوعة من مكونات طبيعية خالية من المواد الحافظة</p>
+                        <div class="stagger-animation">
+                            <a href="#about" class="bg-transparent border-2 border-white text-white hover:bg-white hover:text-green-800 font-bold px-8 py-4 rounded-full text-lg transition duration-300 inline-block">
+                                تعرف على جودتنا <i class="fas fa-leaf mr-2"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- الشريحة الثالثة -->
+            <div class="hero-slide absolute inset-0 flex items-center hero-overlay" style="background: url('https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1981&q=80') center/cover;">
+                <div class="container mx-auto px-4 text-center text-white">
+                    <h2 class="text-4xl md:text-6xl font-bold mb-6 text-shadow stagger-animation">ابتكار <span class="text-orange-400">وتطوير</span> مستمر</h2>
+                    <p class="text-xl mb-8 max-w-2xl mx-auto text-shadow stagger-animation">نواكب أحدث التقنيات في صناعة الغذاء لنقدم لكم الأفضل دائماً</p>
+                    <div class="stagger-animation">
+                        <a href="#innovation" class="bg-orange-500 hover:bg-orange-600 text-white font-bold px-8 py-4 rounded-full text-lg shadow-lg transition duration-300 transform hover:scale-105 inline-block">
+                            شاهد ابتكاراتنا <i class="fas fa-lightbulb mr-2"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- الشريحة الرابعة -->
+            <div class="hero-slide absolute inset-0 flex items-center hero-overlay" style="background: url('https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1980&q=80') center/cover;">
+                <div class="container mx-auto px-4 text-center text-white">
+                    <h2 class="text-4xl md:text-6xl font-bold mb-6 text-shadow stagger-animation">جودة <span class="text-yellow-300">وتميز</span> في كل منتج</h2>
+                    <p class="text-xl mb-8 max-w-2xl mx-auto text-shadow stagger-animation">نضمن لكم منتجات عالية الجودة تلبي أعلى المعايير العالمية</p>
+                    <div class="stagger-animation">
+                        <a href="#products" class="bg-yellow-500 hover:bg-yellow-600 text-green-900 font-bold px-8 py-4 rounded-full text-lg shadow-lg transition duration-300 transform hover:scale-105 inline-block">
+                            استعرض المنتجات <i class="fas fa-arrow-left mr-2"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- قسم من نحن -->
+    <section id="about" class="py-20 gradient-bg-1 relative overflow-hidden">
+        <div class="absolute inset-0 bg-black/10"></div>
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="flex flex-col lg:flex-row items-center">
+                <div class="lg:w-1/2 mb-12 lg:mb-0 flex justify-center">
+                    <div class="relative">
+                        <div class="w-80 h-80 bg-white/20 morph-shape floating"></div>
+                        <div class="absolute -top-6 -right-6 w-64 h-64 bg-yellow-200/30 morph-shape opacity-70"></div>
+                        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96">
+                            <div class="glass-effect rounded-2xl p-8 shadow-xl text-white">
+                                <h3 class="text-2xl font-bold mb-4 text-yellow-300">لماذا نخبة زمزم؟</h3>
+                                <p class="mb-4">نحن نؤمن بأن الغذاء الصحي هو حق للجميع، لذلك نعمل بجد لتقديم منتجات عالية الجودة بأسعار معقولة.</p>
+                                <div class="flex items-center">
+                                    <i class="fas fa-check-circle ml-2"></i>
+                                    <span>خبرة أكثر من 20 عاماً</span>
+                                </div>
+                                <div class="flex items-center mt-2">
+                                    <i class="fas fa-check-circle ml-2"></i>
+                                    <span>شهادات جودة عالمية</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="lg:w-1/2 lg:pr-12 text-white">
+                    <h2 class="text-4xl font-bold mb-6">شركة <span class="text-yellow-300">نخبة زمزم</span></h2>
+                    <p class="text-lg mb-6">تأسست شركة نخبة الغذاء عام 2003 بهدف تقديم منتجات غذائية عالية الجودة تلبي احتياجات المستهلكين في الجمهورية  اليمنية ودول الخليج.</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                        <div class="bg-white/20 backdrop-blur-sm rounded-xl p-6 shadow-lg transform transition duration-500 hover:scale-105">
+                            <div class="w-14 h-14 bg-white/30 rounded-full flex items-center justify-center text-white text-xl mb-4">
+                                <i class="fas fa-leaf"></i>
+                            </div>
+                            <h4 class="text-xl font-bold mb-2">مكونات طبيعية</h4>
+                            <p>نستخدم فقط المكونات الطبيعية الخالية من المواد الحافظة الاصطناعية</p>
+                        </div>
+                        
+                        <div class="bg-white/20 backdrop-blur-sm rounded-xl p-6 shadow-lg transform transition duration-500 hover:scale-105">
+                            <div class="w-14 h-14 bg-white/30 rounded-full flex items-center justify-center text-white text-xl mb-4">
+                                <i class="fas fa-award"></i>
+                            </div>
+                            <h4 class="text-xl font-bold mb-2">جودة عالمية</h4>
+                            <p>نلتزم بأعلى معايير الجودة العالمية في جميع مراحل الإنتاج</p>
+                        </div>
+                    </div>
+                    
+                    <a href="#contact" class="inline-flex items-center bg-white text-purple-700 hover:bg-gray-100 font-bold px-6 py-3 rounded-lg transition duration-300">
+                        تواصل معنا <i class="fas fa-arrow-left mr-2"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- قسم المنتجات بطريقة مبتكرة -->
+    <section id="products" class="py-20 gradient-bg-6 relative overflow-hidden">
+        <div class="absolute inset-0 bg-white/30"></div>
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-gray-800 mb-4">منتجاتنا <span class="text-green-600">المتميزة</span></h2>
+                <div class="w-24 h-1 bg-green-600 mx-auto mb-4"></div>
+                <p class="text-lg text-gray-700 max-w-2xl mx-auto">نقدم تشكيلة واسعة من المنتجات الغذائية التي تلبي جميع الأذواق والاحتياجات الغذائية</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- المنتج 1 مع تأثير الـ 3D -->
+                <div class="relative h-80 product-card">
+                    <div class="product-front absolute inset-0 rounded-2xl overflow-hidden shadow-xl" style="background: url('https://images.unsplash.com/photo-1536939459926-301728717817?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80') center/cover;">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex flex-col justify-end p-6 text-white">
+                            <h3 class="text-2xl font-bold mb-2">الزيوت النباتية</h3>
+                            <p class="text-gray-200">زيت زيتون بكر ممتاز مستخلص من أجود أنواع الزيتون</p>
+                            <button class="mt-4 bg-white text-green-700 px-4 py-2 rounded-full font-semibold self-start">اطلب الآن</button>
+                        </div>
+                    </div>
+                    
+                    <div class="product-back absolute inset-0 bg-gradient-to-br from-amber-500 to-amber-700 rounded-2xl overflow-hidden shadow-xl p-6 flex flex-col justify-center text-white">
+                        <h4 class="text-xl font-bold mb-4">معلومات المنتج</h4>
+                        <ul class="space-y-2 text-amber-100">
+                            <li class="flex items-center">
+                                <i class="fas fa-check ml-2"></i>
+                                <span>زيت زيتون بكر ممتاز</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check ml-2"></i>
+                                <span>معصور على البارد</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check ml-2"></i>
+                                <span>خالي من المواد الحافظة</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check ml-2"></i>
+                                <span>عبوة 750 مل</span>
+                            </li>
+                        </ul>
+                        <button class="mt-6 bg-white text-amber-700 px-4 py-2 rounded-full font-semibold self-start">اطلب الآن</button>
+                    </div>
+                </div>
+                
+                <!-- المنتج 2 مع تأثير الـ 3D -->
+                <div class="relative h-80 product-card">
+                    <div class="product-front absolute inset-0 rounded-2xl overflow-hidden shadow-xl" style="background: url('https://images.unsplash.com/photo-1566772940196-0e2e6d915b1a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80') center/cover;">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex flex-col justify-end p-6 text-white">
+                            <h3 class="text-2xl font-bold mb-2">منتجات الألبان</h3>
+                            <p class="text-gray-200">أجبان طازجة وغنية بالكالسيوم من أفضل أنواع الحليب</p>
+                            <button class="mt-4 bg-white text-blue-700 px-4 py-2 rounded-full font-semibold self-start">اطلب الآن</button>
+                        </div>
+                    </div>
+                    
+                    <div class="product-back absolute inset-0 bg-gradient-to-br from-cyan-500 to-cyan-700 rounded-2xl overflow-hidden shadow-xl p-6 flex flex-col justify-center text-white">
+                        <h4 class="text-xl font-bold mb-4">معلومات المنتج</h4>
+                        <ul class="space-y-2 text-cyan-100">
+                            <li class="flex items-center">
+                                <i class="fas fa-check ml-2"></i>
+                                <span>مصدر غني بالكالسيوم</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check ml-2"></i>
+                                <span>خالي من المواد الحافظة</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check ml-2"></i>
+                                <span>منتجات طازجة يومياً</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check ml-2"></i>
+                                <span>عبوة 400 جرام</span>
+                            </li>
+                        </ul>
+                        <button class="mt-6 bg-white text-cyan-700 px-4 py-2 rounded-full font-semibold self-start">اطلب الآن</button>
+                    </div>
+                </div>
+                
+                <!-- المنتج 3 مع تأثير الـ 3D -->
+                <div class="relative h-80 product-card">
+                    <div class="product-front absolute inset-0 rounded-2xl overflow-hidden shadow-xl" style="background: url('https://images.unsplash.com/photo-1596040033229-a9821ebd058d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80') center/cover;">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex flex-col justify-end p-6 text-white">
+                            <h3 class="text-2xl font-bold mb-2">البهارات</h3>
+                            <p class="text-gray-200">خلطات بهارات مميزة محضرة من أفضل التوابل العالمية</p>
+                            <button class="mt-4 bg-white text-red-700 px-4 py-2 rounded-full font-semibold self-start">اطلب الآن</button>
+                        </div>
+                    </div>
+                    
+                    <div class="product-back absolute inset-0 bg-gradient-to-br from-orange-500 to-orange-700 rounded-2xl overflow-hidden shadow-xl p-6 flex flex-col justify-center text-white">
+                        <h4 class="text-xl font-bold mb-4">معلومات المنتج</h4>
+                        <ul class="space-y-2 text-orange-100">
+                            <li class="flex items-center">
+                                <i class="fas fa-check ml-2"></i>
+                                <span>خلطات بهارات مميزة</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check ml-2"></i>
+                                <span>نقية 100% وخالية من الإضافات</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check ml-2"></i>
+                                <span>معبأة بعناية للحفاظ على النكهة</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check ml-2"></i>
+                                <span>عبوة 200 جرام</span>
+                            </li>
+                        </ul>
+                        <button class="mt-6 bg-white text-orange-700 px-4 py-2 rounded-full font-semibold self-start">اطلب الآن</button>
+                    </div>
+                </div>
+                
+                <!-- المنتج 4 مع تأثير الـ 3D -->
+                <div class="relative h-80 product-card">
+                    <div class="product-front absolute inset-0 rounded-2xl overflow-hidden shadow-xl" style="background: url('https://images.unsplash.com/photo-1586190848861-99aa4a171e90?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2080&q=80') center/cover;">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex flex-col justify-end p-6 text-white">
+                            <h3 class="text-2xl font-bold mb-2">المعلبات</h3>
+                            <p class="text-gray-200">معلبات طبيعية محضرة من أفضل الخضروات والفواكه</p>
+                            <button class="mt-4 bg-white text-purple-700 px-4 py-2 rounded-full font-semibold self-start">اطلب الآن</button>
+                        </div>
+                    </div>
+                    
+                    <div class="product-back absolute inset-0 bg-gradient-to-br from-purple-500 to-purple-700 rounded-2xl overflow-hidden shadow-xl p-6 flex flex-col justify-center text-white">
+                        <h4 class="text-xl font-bold mb-4">معلومات المنتج</h4>
+                        <ul class="space-y-2 text-purple-100">
+                            <li class="flex items-center">
+                                <i class="fas fa-check ml-2"></i>
+                                <span>معلبات طبيعية 100%</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check ml-2"></i>
+                                <span>خالية من المواد الحافظة</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check ml-2"></i>
+                                <span>محضرة من أفضل المكونات</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check ml-2"></i>
+                                <span>عبوة 500 جرام</span>
+                            </li>
+                        </ul>
+                        <button class="mt-6 bg-white text-purple-700 px-4 py-2 rounded-full font-semibold self-start">اطلب الآن</button>
+                    </div>
+                </div>
+                
+                <!-- المنتج 5 مع تأثير الـ 3D -->
+                <div class="relative h-80 product-card">
+                    <div class="product-front absolute inset-0 rounded-2xl overflow-hidden shadow-xl" style="background: url('https://images.unsplash.com/photo-1578985545062-69928b1d9587?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1989&q=80') center/cover;">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex flex-col justify-end p-6 text-white">
+                            <h3 class="text-2xl font-bold mb-2">المخبوزات</h3>
+                            <p class="text-gray-200">مخبوزات طازجة ولذيذة محضرة من دقيق القمح الكامل</p>
+                            <button class="mt-4 bg-white text-yellow-700 px-4 py-2 rounded-full font-semibold self-start">اطلب الآن</button>
+                        </div>
+                    </div>
+                    
+                    <div class="product-back absolute inset-0 bg-gradient-to-br from-yellow-500 to-yellow-700 rounded-2xl overflow-hidden shadow-xl p-6 flex flex-col justify-center text-white">
+                        <h4 class="text-xl font-bold mb-4">معلومات المنتج</h4>
+                        <ul class="space-y-2 text-yellow-100">
+                            <li class="flex items-center">
+                                <i class="fas fa-check ml-2"></i>
+                                <span>مخبوزات طازجة يومياً</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check ml-2"></i>
+                                <span>محضرة من دقيق القمح الكامل</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check ml-2"></i>
+                                <span>خالية من المواد الحافظة</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check ml-2"></i>
+                                <span>تشكيلة متنوعة</span>
+                            </li>
+                        </ul>
+                        <button class="mt-6 bg-white text-yellow-700 px-4 py-2 rounded-full font-semibold self-start">اطلب الآن</button>
+                    </div>
+                </div>
+                
+                <!-- المنتج 6 مع تأثير الـ 3D -->
+                <div class="relative h-80 product-card">
+                    <div class="product-front absolute inset-0 rounded-2xl overflow-hidden shadow-xl" style="background: url('https://images.unsplash.com/photo-1563805042-7684c019e1cb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80') center/cover;">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex flex-col justify-end p-6 text-white">
+                            <h3 class="text-2xl font-bold mb-2">المشروبات</h3>
+                            <p class="text-gray-200">مشروبات طبيعية منعشة مستخلصة من الفواكه الطازجة</p>
+                            <button class="mt-4 bg-white text-pink-700 px-4 py-2 rounded-full font-semibold self-start">اطلب الآن</button>
+                        </div>
+                    </div>
+                    
+                    <div class="product-back absolute inset-0 bg-gradient-to-br from-pink-500 to-pink-700 rounded-2xl overflow-hidden shadow-xl p-6 flex flex-col justify-center text-white">
+                        <h4 class="text-xl font-bold mb-4">معلومات المنتج</h4>
+                        <ul class="space-y-2 text-pink-100">
+                            <li class="flex items-center">
+                                <i class="fas fa-check ml-2"></i>
+                                <span>مشروبات طبيعية 100%</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check ml-2"></i>
+                                <span>مستخلصة من الفواكه الطازجة</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check ml-2"></i>
+                                <span>خالية من السكريات المضافة</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check ml-2"></i>
+                                <span>عبوة 1 لتر</span>
+                            </li>
+                        </ul>
+                        <button class="mt-6 bg-white text-pink-700 px-4 py-2 rounded-full font-semibold self-start">اطلب الآن</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <a href="#" class="inline-flex items-center bg-gradient-to-r from-green-500 to-green-700 hover:from-green-600 hover:to-green-800 text-white font-bold px-8 py-4 rounded-full text-lg transition duration-300 transform hover:scale-105 shadow-lg">
+                    عرض جميع المنتجات <i class="fas fa-arrow-left mr-2"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- قسم الابتكار -->
+    <section id="innovation" class="py-20 gradient-bg-3 relative overflow-hidden">
+        <div class="absolute inset-0 bg-black/20"></div>
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="text-center mb-16 text-white">
+                <h2 class="text-4xl font-bold mb-4">الابتكار <span class="text-yellow-300">والتطوير</span></h2>
+                <div class="w-24 h-1 bg-yellow-400 mx-auto mb-4"></div>
+                <p class="text-lg max-w-2xl mx-auto">نسعى دائماً للريادة في مجال صناعة الغذاء من خلال الابتكار والتطوير المستمر</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white/20 backdrop-blur-sm rounded-2xl p-8 transform transition duration-500 hover:scale-105 hover:bg-white/30 text-white">
+                    <div class="w-16 h-16 bg-white/30 rounded-full flex items-center justify-center text-white text-2xl mb-6">
+                        <i class="fas fa-flask"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">البحث والتطوير</h3>
+                    <p>نستثمر بشكل كبير في البحث والتطوير لابتكار منتجات جديدة تلبي احتياجات المستهلكين المتغيرة</p>
+                </div>
+                
+                <div class="bg-white/20 backdrop-blur-sm rounded-2xl p-8 transform transition duration-500 hover:scale-105 hover:bg-white/30 text-white">
+                    <div class="w-16 h-16 bg-white/30 rounded-full flex items-center justify-center text-white text-2xl mb-6">
+                        <i class="fas fa-recycle"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">الاستدامة</h3>
+                    <p>نتبنى ممارسات مستدامة في جميع عملياتنا للحفاظ على البيئة للأجيال القادمة</p>
+                </div>
+                
+                <div class="bg-white/20 backdrop-blur-sm rounded-2xl p-8 transform transition duration-500 hover:scale-105 hover:bg-white/30 text-white">
+                    <div class="w-16 h-16 bg-white/30 rounded-full flex items-center justify-center text-white text-2xl mb-6">
+                        <i class="fas fa-industry"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">التقنية المتطورة</h3>
+                    <p>نستخدم أحدث التقنيات في عمليات التصنيع لضمان الجودة والكفاءة في الإنتاج</p>
+                </div>
+            </div>
+            
+            <div class="mt-16 bg-gradient-to-r from-blue-800/80 to-blue-600/80 backdrop-blur-sm rounded-2xl p-8 md:p-12 text-center text-white">
+                <h3 class="text-3xl font-bold mb-6">انضم إلى رحلتنا الابتكارية</h3>
+                <p class="text-xl mb-8 max-w-2xl mx-auto">نبحث دائماً عن مواهب جديدة لتطوير صناعة الغذاء معاً</p>
+                <a href="#contact" class="inline-flex items-center bg-white text-blue-800 hover:bg-gray-100 font-bold px-8 py-4 rounded-full text-lg transition duration-300">
+                    انضم إلينا <i class="fas fa-arrow-left mr-2"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- قسم اتصل بنا -->
+    <section id="contact" class="py-20 gradient-bg-5 relative overflow-hidden">
+        <div class="absolute inset-0 bg-black/10"></div>
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="text-center mb-16 text-white">
+                <h2 class="text-4xl font-bold mb-4">اتصل <span class="text-yellow-300">بنا</span></h2>
+                <div class="w-24 h-1 bg-yellow-400 mx-auto mb-4"></div>
+                <p class="text-lg max-w-2xl mx-auto">نحن هنا للإجابة على استفساراتكم وتلقي ملاحظاتكم. لا تتردد في التواصل معنا.</p>
+            </div>
+            
+            <div class="flex flex-col lg:flex-row">
+                <div class="lg:w-1/2 mb-10 lg:mb-0 lg:ml-8">
+                    <div class="glass-effect rounded-2xl p-8 shadow-lg h-full text-white">
+                        <h3 class="text-2xl font-bold mb-6">معلومات التواصل</h3>
+                        
+                        <div class="space-y-6">
+                            <div class="flex items-start">
+                                <div class="bg-white/30 rounded-full p-3 ml-4 flex-shrink-0">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-lg font-bold mb-1">العنوان</h4>
+                                    <p>الرياض، المملكة العربية السعودية</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="bg-white/30 rounded-full p-3 ml-4 flex-shrink-0">
+                                    <i class="fas fa-phone"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-lg font-bold mb-1">الهاتف</h4>
+                                    <p>+966 11 123 4567</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="bg-white/30 rounded-full p-3 ml-4 flex-shrink-0">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-lg font-bold mb-1">البريد الإلكتروني</h4>
+                                    <p>info@nokhbat-alghidha.com</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="bg-white/30 rounded-full p-3 ml-4 flex-shrink-0">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-lg font-bold mb-1">ساعات العمل</h4>
+                                    <p>الأحد - الخميس: 8 ص - 5 م</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-8">
+                            <h4 class="text-lg font-bold mb-4">تابعنا على</h4>
+                            <div class="flex space-x-4 space-x-reverse">
+                                <a href="#" class="bg-white/30 hover:bg-white/40 text-white rounded-full w-12 h-12 flex items-center justify-center transition duration-300 transform hover:scale-110">
+                                    <i class="fab fa-twitter"></i>
+                                </a>
+                                <a href="#" class="bg-white/30 hover:bg-white/40 text-white rounded-full w-12 h-12 flex items-center justify-center transition duration-300 transform hover:scale-110">
+                                    <i class="fab fa-facebook-f"></i>
+                                </a>
+                                <a href="#" class="bg-white/30 hover:bg-white/40 text-white rounded-full w-12 h-12 flex items-center justify-center transition duration-300 transform hover:scale-110">
+                                    <i class="fab fa-instagram"></i>
+                                </a>
+                                <a href="#" class="bg-white/30 hover:bg-white/40 text-white rounded-full w-12 h-12 flex items-center justify-center transition duration-300 transform hover:scale-110">
+                                    <i class="fab fa-linkedin-in"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="lg:w-1/2">
+                    <div class="glass-effect rounded-2xl p-8 shadow-lg text-white">
+                        <h3 class="text-2xl font-bold mb-6">أرسل رسالة</h3>
+                        
+                        <form>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                                <div>
+                                    <label for="name" class="block mb-2">الاسم الكامل</label>
+                                    <input type="text" id="name" class="w-full px-4 py-3 bg-white/20 border border-white/30 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition duration-300 placeholder-white/70" placeholder="أدخل اسمك الكامل">
+                                </div>
+                                
+                                <div>
+                                    <label for="email" class="block mb-2">البريد الإلكتروني</label>
+                                    <input type="email" id="email" class="w-full px-4 py-3 bg-white/20 border border-white/30 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition duration-300 placeholder-white/70" placeholder="أدخل بريدك الإلكتروني">
+                                </div>
+                            </div>
+                            
+                            <div class="mb-6">
+                                <label for="subject" class="block mb-2">الموضوع</label>
+                                <input type="text" id="subject" class="w-full px-4 py-3 bg-white/20 border border-white/30 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition duration-300 placeholder-white/70" placeholder="موضوع الرسالة">
+                            </div>
+                            
+                            <div class="mb-6">
+                                <label for="message" class="block mb-2">الرسالة</label>
+                                <textarea id="message" rows="5" class="w-full px-4 py-3 bg-white/20 border border-white/30 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition duration-300 placeholder-white/70" placeholder="اكتب رسالتك هنا"></textarea>
+                            </div>
+                            
+                            <button type="submit" class="w-full bg-yellow-400 hover:bg-yellow-500 text-gray-800 py-4 rounded-lg font-bold text-lg transition duration-300 transform hover:scale-105">
+                                إرسال الرسالة <i class="fas fa-paper-plane mr-2"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- الفوتر -->
+    <footer class="bg-gradient-to-r from-gray-800 to-gray-900 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-6 md:mb-0">
+                    <div class="flex items-center">
+                        <div class="w-10 h-10 bg-gradient-to-r from-green-600 to-green-800 rounded-full flex items-center justify-center text-white font-bold">ن</div>
+                        <span class="mr-3 text-xl font-bold">نخبة زمزم</span>
+                    </div>
+                    <p class="mt-4 text-gray-400 max-w-md">شركة رائدة في صناعة المواد الغذائية، نقدم منتجات عالية الجودة تلبي احتياجات المستهلكين وتواكب التطورات الحديثة في الصناعة الغذائية.</p>
+                </div>
+                
+                <div class="flex space-x-6 space-x-reverse">
+                    <a href="#" class="text-gray-400 hover:text-white transition duration-300 transform hover:scale-110">
+                        <i class="fab fa-twitter text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition duration-300 transform hover:scale-110">
+                        <i class="fab fa-facebook-f text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition duration-300 transform hover:scale-110">
+                        <i class="fab fa-instagram text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition duration-300 transform hover:scale-110">
+                        <i class="fab fa-linkedin-in text-xl"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+                <p>جميع الحقوق محفوظة &copy; 2025 شركة نخبة زمزم</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // القائمة المنسدلة للهواتف
+        document.getElementById('menu-toggle').addEventListener('click', function() {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+        
+        // تأثيرات التمرير
+        document.addEventListener('DOMContentLoaded', function() {
+            const scrollElements = document.querySelectorAll('.scroll-animate > *');
+            
+            const elementInView = (el, dividend = 1) => {
+                const elementTop = el.getBoundingClientRect().top;
+                return (
+                    elementTop <= (window.innerHeight || document.documentElement.clientHeight) / dividend
+                );
+            };
+            
+            const displayScrollElement = (element) => {
+                element.style.animationPlayState = 'running';
+            };
+            
+            const handleScrollAnimation = () => {
+                scrollElements.forEach((el) => {
+                    if (elementInView(el, 1.2)) {
+                        displayScrollElement(el);
+                    }
+                });
+            };
+            
+            window.addEventListener('scroll', () => {
+                handleScrollAnimation();
+            });
+            
+            // تشغيل مرة أولى عند التحميل
+            handleScrollAnimation();
+        });
+        
+        // سلايدر الهيرو التلقائي
+        document.addEventListener('DOMContentLoaded', function() {
+            const slides = document.querySelectorAll('.hero-slide');
+            let currentSlide = 0;
+            
+            function showSlide(n) {
+                slides.forEach(slide => {
+                    slide.style.opacity = '0';
+                    slide.style.zIndex = '1';
+                });
+                
+                slides[n].style.opacity = '1';
+                slides[n].style.zIndex = '2';
+            }
+            
+            function nextSlide() {
+                currentSlide = (currentSlide + 1) % slides.length;
+                showSlide(currentSlide);
+            }
+            
+            // بدء السلايدر
+            showSlide(currentSlide);
+            setInterval(nextSlide, 5000); // تغيير الشريحة كل 5 ثواني
+        });
+        
+        // تأثيرات التنقل الناعمة
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // تأثير الشريط العلوي عند التمرير
+        window.addEventListener('scroll', function() {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 100) {
+                nav.classList.add('bg-white', 'shadow-lg');
+                nav.classList.remove('bg-white/90');
+            } else {
+                nav.classList.remove('bg-white', 'shadow-lg');
+                nav.classList.add('bg-white/90');
+            }
+        });
+    </script>
+</body>
+</html>
